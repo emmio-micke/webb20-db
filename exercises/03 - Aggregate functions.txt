@@ -1,0 +1,23 @@
+ Använd exempeldatabasen classicmodels för följande övningar.
+
+1. Gör en lista över alla kontor. Lista orten som kontoret ligger i och hur många anställda som jobbar på kontoret.
+
+2. Gör en lista som summerar värdet på alla ordrar per månad. Resultatet ska se ut något sånt här:
+(kommer)
+
+3. Formattera OrderValue så att resultatet ser ut ungefär såhär:
+(kommer)
+
+4. Gör en lista över alla företag, den totala summan de har beställt för, den totala summan de har betalat och skillnaden mellan dessa värden. Du kan använda mycket från föregående uppgift.
+
+5. Utöka föregående uppgift genom att lägga till kreditgränsen som finns för varje företag. Lista enbart de företag som har överskridit sin kreditgräns.
+
+6. Nästan varje kund har en säljare hos vårt företag. Gör en lista som ser ut såhär. Sortera efter kundens land och sedan efter kundens ort.
+
+7. Hur många kunder har ingen säljare i samma land? Summera per land.
+
+8. Hur många kunder har ingen säljare i samma stad? Summera per land. (Bonus: förklara varför lösningen ser ut som den gör; vad skulle hända om man t ex skulle jämföra Paris, Texas, US och Paris Frankrike?)
+
+9. Lista de fem totala toppsäljarna. (Jag har faktiskt använt en extra kolumn för att få till sorteringen rätt. Varför?)
+
+10. Lista de fem bästa försäljningsmånaderna.

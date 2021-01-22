@@ -1,0 +1,15 @@
+Använd exempeldatabasen classicmodels för följande uppgifter.
+
+1. Lista alla produkter med namn, pris och beskrivningen av produktlinjen.
+
+2. Gör om samma fråga som ovan, men lista bara de tre dyraste.
+
+3. Lista alla produkter som det finns färre än 100 kvar av eller som kostar mer än $100.
+
+4. Gör en fråga som listar order-uppgifter (orderdatum, kommentarer mm) för en specifik order.
+
+5. Lägg till orderraderna för varje order genom en lämplig join med orderdetails.
+
+6. Gör en lista över alla anställda.
+
+7. Lägg till stad och land för kontoret som varje anställd sitter på.

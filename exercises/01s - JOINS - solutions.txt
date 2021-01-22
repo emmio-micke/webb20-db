@@ -1,0 +1,30 @@
+1.
+SELECT p.productName, p.buyPrice, pl.textDescription FROM products p
+INNER JOIN productlines pl ON p.productLine = pl.productLine
+
+2.
+SELECT p.productName, p.buyPrice, pl.textDescription FROM products p
+INNER JOIN productlines pl ON p.productLine = pl.productLine ORDER BY p.buyPrice DESC
+LIMIT 0, 3;
+
+3.
+SELECT p.productName, p.quantityInStock, p.buyPrice FROM products p
+WHERE p.quantityInStock < 100
+OR p.buyPrice > 100;
+
+4.
+SELECT *
+FROM classicmodels.orders WHERE orderNumber = '10102';
+
+5.
+SELECT * FROM orders o
+LEFT OUTER JOIN orderDetails od ON o.orderNumber = od.orderNumber
+ORDER BY o.orderNumber
+
+6.
+SELECT *
+FROM employees;
+
+7.
+SELECT e.*, o.city, o.country FROM employees e
+LEFT OUTER JOIN offices o ON e.officeCode = o.officeCode

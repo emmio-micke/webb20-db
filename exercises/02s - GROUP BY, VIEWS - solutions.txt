@@ -1,0 +1,59 @@
+1.
+SELECT p.productName, od.quantityOrdered * od.priceEach AS RowValue FROM orderdetails od
+INNER JOIN products p ON od.productCode = p.productCode;
+
+2.
+SELECT orderNumber, SUM(quantityOrdered * priceEach) AS OrderValue FROM orderdetails
+GROUP BY orderNumber;
+
+3.
+CREATE VIEW `classicmodels`.`vwOrderValues` AS
+SELECT orderNumber, SUM(quantityOrdered * priceEach) AS OrderValue FROM orderdetails
+GROUP BY orderNumber;
+
+4.
+SELECT c.customerName, SUM(ov.OrderValue) FROM customers c
+INNER JOIN orders o ON c.customerNumber = o.customerNumber
+INNER JOIN vwOrderValues ov ON ov.orderNumber = o.orderNumber GROUP BY c.customerName;
+
+5.
+SELECT c.customerName, SUM(ov.OrderValue) AS SumOrderValue,
+(SELECT SUM(amount)
+FROM payments
+WHERE customerNumber = c.customerNumber) AS Paid
+FROM customers c
+INNER JOIN orders o ON c.customerNumber = o.customerNumber INNER JOIN vwOrderValues ov ON ov.orderNumber = o.orderNumber
+GROUP BY c.customerName;
+
+6.1
+CREATE SCHEMA `newspaper` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ; alt.
+CREATE SCHEMA `newspaper` ;
+
+6.2
+CREATE TABLE `newspaper`.`users` (
+`UserID` INT NOT NULL AUTO_INCREMENT , `FirstName` VARCHAR(45) NULL ,
+`LastName` VARCHAR(45) NULL ,
+PRIMARY KEY (`UserID`) );
+INSERT INTO users (FirstName, LastName) VALUES ('Henry', 'Andersson'); INSERT INTO users (FirstName, LastName) VALUES ('Rikard', 'Carlbom'); INSERT INTO users (FirstName, LastName) VALUES ('Johannes', 'Fundin'); INSERT INTO users (FirstName, LastName) VALUES ('Mats', 'Gustavsson'); INSERT INTO users (FirstName, LastName) VALUES ('Anders', 'Hedborg');
+
+6.3
+CREATE TABLE `newspaper`.`articles` (
+`ArticleID` INT NOT NULL AUTO_INCREMENT , `Subject` VARCHAR(45) NULL ,
+`Body` TEXT NULL ,
+`Author` INT NULL ,
+`Published` BIT NULL , PRIMARY KEY (`ArticleID`) );
+INSERT INTO articles (Subject, Body, Author, Published) VALUES ('Rubrik1', 'Lorem ipsum 1', 1, 1);
+INSERT INTO articles (Subject, Body, Author, Published) VALUES ('Rubrik2', 'Lorem ipsum 2', 2, 1);
+INSERT INTO articles (Subject, Body, Author, Published) VALUES ('Rubrik3', 'Lorem ipsum 3', 3, 0);
+INSERT INTO articles (Subject, Body, Author, Published) VALUES ('Rubrik4', 'Lorem ipsum 4', 4, 1);
+INSERT INTO articles (Subject, Body, Author, Published) VALUES ('Rubrik5', 'Lorem ipsum 5', 5, 1);
+INSERT INTO articles (Subject, Body, Author, Published) VALUES ('Rubrik6', 'Lorem ipsum 6', 1, 0);
+INSERT INTO articles (Subject, Body, Author, Published) VALUES ('Rubrik7', 'Lorem ipsum 7', 2, 1);
+INSERT INTO articles (Subject, Body, Author, Published) VALUES ('Rubrik8', 'Lorem ipsum 8', 3, 0);
+INSERT INTO articles (Subject, Body, Author, Published) VALUES ('Rubrik9', 'Lorem ipsum 9', 4, 1);
+INSERT INTO articles (Subject, Body, Author, Published) VALUES ('Rubrik10', 'Lorem ipsum 10', 5, 1);
+
+6.4
+CREATE VIEW `newspaper`.`vwArticles` AS
+SELECT a.ArticleID, a.Subject, a.Body, CONCAT(u.FirstName, ' ', u.LastName) AS Author FROM articles a
+INNER JOIN users u ON a.Author = u.UserID WHERE Published = 1;

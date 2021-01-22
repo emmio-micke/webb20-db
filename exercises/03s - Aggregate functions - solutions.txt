@@ -1,0 +1,128 @@
+1:
+SELECT 
+    o.city AS Office, COUNT(*) AS NumberOfEmployees
+FROM classicmodels.offices o
+    LEFT OUTER JOIN classicmodels.employees e ON o.officeCode = e.officeCode
+GROUP BY o.city
+
+2:
+SELECT 
+    DATE_FORMAT(orderDate, '%Y-%m') AS SalesMonth,
+    SUM(od.quantityOrdered * od.priceEach) AS OrderValue
+FROM classicmodels.orders o
+    LEFT OUTER JOIN classicmodels.orderdetails od ON o.orderNumber = od.orderNumber
+GROUP BY SalesMonth
+
+3:
+SELECT 
+    DATE_FORMAT(orderDate, '%Y-%m') AS SalesMonth,
+    FORMAT(SUM(od.quantityOrdered * od.priceEach), 2) AS OrderValue
+FROM classicmodels.orders o
+    LEFT OUTER JOIN classicmodels.orderdetails od ON o.orderNumber = od.orderNumber
+GROUP BY SalesMonth
+
+4:
+SELECT 
+    c.customerName,
+    FORMAT(SUM(od.quantityOrdered * od.priceEach), 2) AS TotalCustomerValue,
+    FORMAT((SELECT SUM(amount)
+            FROM payments
+            WHERE customerNumber = o.customerNumber), 2) AS TotalCustomerPaid,
+    FORMAT(SUM(od.quantityOrdered * od.priceEach)
+           - (SELECT SUM(amount)
+              FROM payments
+              WHERE customerNumber = o.customerNumber), 2) AS Difference
+FROM orders o
+    INNER JOIN orderdetails od ON o.orderNumber = od.orderNumber
+    INNER JOIN customers c ON c.customerNumber = o.customerNumber
+GROUP BY o.customerNumber
+ORDER BY c.customerName
+
+5:
+SELECT 
+    c.customerName,
+    FORMAT(SUM(od.quantityOrdered * od.priceEach), 2) AS TotalCustomerValue,
+    FORMAT((SELECT SUM(amount)
+            FROM payments
+            WHERE customerNumber = o.customerNumber), 2) AS TotalCustomerPaid,
+    FORMAT((SELECT SUM(amount)
+            FROM payments
+            WHERE customerNumber = o.customerNumber)
+            - SUM(od.quantityOrdered * od.priceEach), 2) AS Difference,
+    c.creditLimit
+FROM orders o
+    INNER JOIN orderdetails od ON o.orderNumber = od.orderNumber
+    INNER JOIN customers c ON c.customerNumber = o.customerNumber
+GROUP BY o.customerNumber
+HAVING -((SELECT 
+        SUM(amount)
+    FROM payments
+    WHERE customerNumber = o.customerNumber) - SUM(od.quantityOrdered * od.priceEach)) > c.creditLimit
+ORDER BY c.customerName
+
+6:
+SELECT 
+    c.customerName AS Customer,
+    CONCAT(c.contactFirstName,
+            ' ',
+            c.contactLastName) AS CustomerContact,
+    c.city AS CustomerCity,
+    c.country AS CustomerCountry,
+    CONCAT(e.firstName, ' ', e.lastName) AS SalesRepresentative,
+    o.city AS OfficeCity,
+    o.country AS OfficeCountry
+FROM customers c
+    LEFT OUTER JOIN employees e ON c.salesRepEmployeeNumber = e.employeeNumber
+    LEFT OUTER JOIN offices o ON e.officeCode = o.officeCode
+ORDER BY CustomerCountry , CustomerCity;
+
+7:
+SELECT 
+    c.country AS CustomerCountry,
+    COUNT(*) AS NoOfCustomersWithoutLocalRep
+FROM customers c
+    LEFT OUTER JOIN employees e ON c.salesRepEmployeeNumber = e.employeeNumber
+    LEFT OUTER JOIN offices o ON e.officeCode = o.officeCode
+WHERE
+    c.country <> o.country
+GROUP BY CustomerCountry
+
+8:
+ SELECT 
+    c.city AS CustomerCity,
+    COUNT(*) AS NoOfCustomersWithoutLocalRep
+FROM customers c
+    LEFT OUTER JOIN employees e ON c.salesRepEmployeeNumber = e.employeeNumber
+    LEFT OUTER JOIN offices o ON e.officeCode = o.officeCode
+WHERE
+    c.city <> o.city
+        OR (c.city = o.city
+        AND c.country <> o.country)
+GROUP BY CustomerCity
+
+9:
+SELECT 
+    CONCAT(e.firstName, ' ', e.lastName) AS SalesRepresentative,
+    FORMAT(SUM(od.quantityOrdered * od.priceEach),
+        2) AS OrderValue
+FROM orders o
+    INNER JOIN orderdetails od ON o.orderNumber = od.orderNumber
+    INNER JOIN customers c ON o.customerNumber = c.customerNumber
+    INNER JOIN employees e ON c.salesRepEmployeeNumber = e.employeeNumber
+GROUP BY SalesRepresentative
+ORDER BY OrderValue
+LIMIT 5
+
+10:
+SELECT 
+    DATE_FORMAT(orderDate, '%Y-%m') AS SalesMonth,
+    CONCAT(e.firstName, ' ', e.lastName) AS SalesRepresentative,
+    FORMAT(SUM(od.quantityOrdered * od.priceEach),
+        2) AS OrderValue
+FROM orders o
+    INNER JOIN orderdetails od ON o.orderNumber = od.orderNumber
+    INNER JOIN customers c ON o.customerNumber = c.customerNumber
+    INNER JOIN employees e ON c.salesRepEmployeeNumber = e.employeeNumber
+GROUP BY SalesMonth , SalesRepresentative
+ORDER BY SUM(od.quantityOrdered * od.priceEach) DESC
+LIMIT 5

@@ -1,0 +1,21 @@
+Använd exempeldatabasen classicmodels för följande uppgifter, där inget annat nämns.
+
+1. Lista produktnamnet och ordervärdet för varje orderrad.
+
+2. Lista ordernummer och det sammanlagda ordervärdet för varje order.
+
+3. Gör en vy av ovanstående fråga.
+
+4. Använd vyn för att lista alla kunder och hur mycket varje kund har beställt för sammanlagt.
+
+5. Använd förra listan och lägg till en kolumn med hur mycket varje kund har betalat sammanlagt.
+
+6. Newspaper
+
+6.1. Skapa en databas som heter newspaper.
+
+6.2. Skapa en tabell i newspaper som heter users. Varje användare ska ha ett id, ett förnamn och ett efternamn. Lägg in fem användare.
+
+6.3. Skapa en tabell i newspaper som heter articles. Den ska innehålla rubrik, text, författare (id som kopplas till user) samt en boolean som indikerar om artikeln är publicerad eller inte. Lägg in ett par artiklar.
+
+6.4. Gör en vy som listar alla publicerade artiklar och deras författare.
