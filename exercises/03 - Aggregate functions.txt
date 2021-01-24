@@ -3,10 +3,23 @@
 1. Gör en lista över alla kontor. Lista orten som kontoret ligger i och hur många anställda som jobbar på kontoret.
 
 2. Gör en lista som summerar värdet på alla ordrar per månad. Resultatet ska se ut något sånt här:
-(kommer)
+
+# SalesMonth, OrderValue
+'2003-01', '116692.77'
+'2003-02', '128403.64'
+'2003-03', '160517.14'
+'2003-04', '185848.59'
+[...]
 
 3. Formattera OrderValue så att resultatet ser ut ungefär såhär:
-(kommer)
+
+# SalesMonth, OrderValue
+'2003-01', '116,692.77'
+'2003-02', '128,403.64'
+'2003-03', '160,517.14'
+'2003-04', '185,848.59'
+'2003-05', '179,435.55'
+
 
 4. Gör en lista över alla företag, den totala summan de har beställt för, den totala summan de har betalat och skillnaden mellan dessa värden. Du kan använda mycket från föregående uppgift.
 
@@ -16,7 +29,7 @@
 
 7. Hur många kunder har ingen säljare i samma land? Summera per land.
 
-8. Hur många kunder har ingen säljare i samma stad? Summera per land. (Bonus: förklara varför lösningen ser ut som den gör; vad skulle hända om man t ex skulle jämföra Paris, Texas, US och Paris Frankrike?)
+8. Hur många kunder har ingen säljare i samma stad? Summera per land. (Bonus: förklara varför lösningen ser ut som den gör; vad skulle hända om man t ex skulle jämföra Paris, Texas, US och Paris, Frankrike?)
 
 9. Lista de fem totala toppsäljarna. (Jag har faktiskt använt en extra kolumn för att få till sorteringen rätt. Varför?)
 
